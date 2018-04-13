@@ -2,7 +2,7 @@ package controller;
 
 public enum ActionCommand {
 
-	COMMAND_LOAD_TREE("COMMAND_LOAD_TREE", "Cargar");
+	COMMAND_ENTER("COMMAND_ENTER", "Aceptar");
 	
 	private String command;
 	private String title;

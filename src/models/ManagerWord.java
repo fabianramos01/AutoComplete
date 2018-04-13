@@ -5,7 +5,7 @@ package models;
 public class ManagerWord {
 
 	private NTree<Letter> nTree;
-//	private ArrayList<String> words;
+	// private ArrayList<String> words;
 
 	public ManagerWord() {
 		nTree = new NTree<Letter>();
@@ -13,34 +13,36 @@ public class ManagerWord {
 	}
 
 	public void predict(String predict) {
-		Node<Letter> node = nTree.search(predict.substring(1));
-		if (node != null) {
-			addLetter(predict, 1);
+		Node<Letter> actual = searchChild(nTree.getRoot(), String.valueOf(predict.charAt(0)));
+		if (actual != null) {
+			addLetter(actual, predict, 1);
 		} else {
-			nTree.addNode(nTree.getRoot(), createNodeLetter(predict, 0));
-			addLetter(predict, 0);
+			addLetter(nTree.getRoot(), predict, 0);
 		}
-	}
-	
-	private void addLetter(String info, int i) {
-		Node<Letter> father = nTree.search(String.valueOf(info.charAt(i)));
-		if (i+1 < info.length()) {
-			if (searchChild(father, String.valueOf(info.charAt(i + 1)))) {
-				addLetter(info, i + 2);
-			} else {
-				father.addChild(createNodeLetter(info, i+1));
-				addLetter(info, i+1);
-			}
-		}	
 	}
 
-	private boolean searchChild(Node<Letter> father, String letter) {
-		for (Node<Letter> node : father.getChilds()) {
-			if (node.toString().equalsIgnoreCase(letter)) {
-				return true;
+	private void addLetter(Node<Letter> father, String info, int i) {
+		if (i < info.length()) {
+			System.out.println(info.charAt(i));
+			Node<Letter> actual = searchChild(father, String.valueOf(info.charAt(i)));
+			if (actual != null) {
+				System.out.println("....");
+				addLetter(actual, info, i + 1);
+			} else {
+				actual = createNodeLetter(info, i);
+				father.addChild(actual);
+				addLetter(actual, info, i + 1);
 			}
 		}
-		return false;
+	}
+
+	private Node<Letter> searchChild(Node<Letter> father, String letter) {
+		for (Node<Letter> node : father.getChilds()) {
+			if (node.toString().equalsIgnoreCase(letter)) {
+				return node;
+			}
+		}
+		return null;
 	}
 
 	public void name() {

@@ -14,21 +14,18 @@ public class Controller implements ActionListener {
 	public Controller() {
 		managerWord = new ManagerWord();
 		pFrame = new PrincipalFrame(this);
-		loadRoot();
 	}
 
-	public void loadRoot() {
-		pFrame.setVisible(false);
-		managerWord.predict("hello");
+	public void loadWord() {
+		managerWord.predict(pFrame.getText());
 		pFrame.paintTree(managerWord.getRoot());
-		pFrame.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (ActionCommand.valueOf(e.getActionCommand())) {
-		case COMMAND_LOAD_TREE:
-			loadRoot();
+		case COMMAND_ENTER:
+			loadWord();
 			break;
 		}
 

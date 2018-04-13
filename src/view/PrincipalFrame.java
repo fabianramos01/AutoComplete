@@ -18,12 +18,14 @@ public class PrincipalFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTree jTree;
 	private DefaultMutableTreeNode model;
+	private PanelText panelText;
 	
 	public PrincipalFrame(ActionListener listener) {
 		setIconImage(new ImageIcon(getClass().getResource(ConstantList.ICON_APP)).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
-		setJMenuBar(new MenuBar(listener));
+		panelText = new PanelText(listener);
+		add(panelText, BorderLayout.NORTH);
 		model = new DefaultMutableTreeNode();
 		jTree = new JTree(model);
 		add(new JScrollPane(jTree), BorderLayout.CENTER);
@@ -46,5 +48,9 @@ public class PrincipalFrame extends JFrame {
 				createNode(newNode, child);
 			}
 		}
+	}
+	
+	public String getText() {
+		return panelText.getText();
 	}
 }
