@@ -15,6 +15,8 @@ public class ManagerWord {
 	public void predict(String predict) {
 		Node<Letter> actual = searchChild(nTree.getRoot(), String.valueOf(predict.charAt(0)));
 		if (actual != null) {
+			actual.getInfo().addVisit();
+			System.out.println(actual.getInfo().getVisit());
 			addLetter(actual, predict, 1);
 		} else {
 			addLetter(nTree.getRoot(), predict, 0);
@@ -23,10 +25,9 @@ public class ManagerWord {
 
 	private void addLetter(Node<Letter> father, String info, int i) {
 		if (i < info.length()) {
-			System.out.println(info.charAt(i));
 			Node<Letter> actual = searchChild(father, String.valueOf(info.charAt(i)));
 			if (actual != null) {
-				System.out.println("....");
+				actual.getInfo().addVisit();
 				addLetter(actual, info, i + 1);
 			} else {
 				actual = createNodeLetter(info, i);

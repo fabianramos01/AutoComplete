@@ -19,6 +19,7 @@ public class Controller implements ActionListener {
 	public void loadWord() {
 		managerWord.predict(pFrame.getText());
 		pFrame.paintTree(managerWord.getRoot());
+		pFrame.repaint();
 	}
 
 	@Override
