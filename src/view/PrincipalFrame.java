@@ -1,16 +1,18 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
+import java.awt.Color;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import controller.ConstantList;
+import controller.Controller;
 import models.Letter;
 import models.Node;
 
@@ -21,13 +23,17 @@ public class PrincipalFrame extends JFrame {
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel model;
 	private PanelText panelText;
+	private JLabel label;
 
-	public PrincipalFrame(ActionListener listener) {
+	public PrincipalFrame(Controller listener) {
 		setIconImage(new ImageIcon(getClass().getResource(ConstantList.ICON_APP)).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
+		addKeyListener(listener);
 		panelText = new PanelText(listener);
 		add(panelText, BorderLayout.NORTH);
+		label = UtilityList.createJLabel("", ConstantList.AGENCY_FB, Color.BLACK);
+		add(label, BorderLayout.SOUTH);
 		root = new DefaultMutableTreeNode();
 		model = new DefaultTreeModel(root);
 		jTree = new JTree(model);
@@ -53,7 +59,11 @@ public class PrincipalFrame extends JFrame {
 			}
 		}
 	}
-
+	
+	public void setLabel(String word) {
+		label.setText(word);
+	}
+	
 	public String getText() {
 		return panelText.getText();
 	}

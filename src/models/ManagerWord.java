@@ -1,11 +1,11 @@
 package models;
 
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class ManagerWord {
 
 	private NTree<Letter> nTree;
-	// private ArrayList<String> words;
+	private ArrayList<String> words;
 
 	public ManagerWord() {
 		nTree = new NTree<Letter>();
@@ -13,13 +13,14 @@ public class ManagerWord {
 	}
 
 	public void predict(String predict) {
-		Node<Letter> actual = searchChild(nTree.getRoot(), String.valueOf(predict.charAt(0)));
-		if (actual != null) {
-			actual.getInfo().addVisit();
-			System.out.println(actual.getInfo().getVisit());
-			addLetter(actual, predict, 1);
-		} else {
-			addLetter(nTree.getRoot(), predict, 0);
+		if (!predict.equals("")) {
+			Node<Letter> actual = searchChild(nTree.getRoot(), String.valueOf(predict.charAt(0)));
+			if (actual != null) {
+				actual.getInfo().addVisit();
+				addLetter(actual, predict, 1);
+			} else {
+				addLetter(nTree.getRoot(), predict, 0);
+			}
 		}
 	}
 
@@ -34,6 +35,21 @@ public class ManagerWord {
 				father.addChild(actual);
 				addLetter(actual, info, i + 1);
 			}
+		} else {
+			predict(father, info);
+		}
+	}
+	
+	private void predict(Node<Letter> actual, String info) {
+		if (!actual.getChilds().isEmpty()) {
+			Node<Letter> high = createNodeLetter(".", 0);
+			for (Node<Letter> node : actual.getChilds()) {
+				if (high.getInfo().getVisit() <= node.getInfo().getVisit()) {
+					high = node;
+				}
+			}
+			info += high.toString();
+			predict(high, info);
 		}
 	}
 
@@ -46,12 +62,12 @@ public class ManagerWord {
 		return null;
 	}
 
-	public void name() {
-
-	}
-
 	private Node<Letter> createNodeLetter(String info, int index) {
 		return new Node<Letter>(new Letter(info.charAt(index)));
+	}
+
+	public ArrayList<String> getWords() {
+		return words;
 	}
 
 	public Node<Letter> getRoot() {
