@@ -19,9 +19,9 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	public void loadWord() {
-		String predict = managerWord.predict(pFrame.getText());
+		managerWord.predict(pFrame.getText());
 		pFrame.paintTree(managerWord.getRoot());
-		pFrame.setLabel(predict);
+		pFrame.setList(managerWord.getWords());
 		pFrame.repaint();
 	}
 

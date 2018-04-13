@@ -1,11 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -23,7 +26,9 @@ public class PrincipalFrame extends JFrame {
 	private DefaultMutableTreeNode root;
 	private DefaultTreeModel model;
 	private PanelText panelText;
-	private JLabel label;
+	private DefaultListModel<String> listModel;
+	private JList<String> list;
+	private JPanel panelCenter;
 
 	public PrincipalFrame(Controller listener) {
 		setIconImage(new ImageIcon(getClass().getResource(ConstantList.ICON_APP)).getImage());
@@ -32,12 +37,15 @@ public class PrincipalFrame extends JFrame {
 		addKeyListener(listener);
 		panelText = new PanelText(listener);
 		add(panelText, BorderLayout.NORTH);
-		label = UtilityList.createJLabel("", ConstantList.AGENCY_FB, Color.BLACK);
-		add(label, BorderLayout.SOUTH);
+		panelCenter = new JPanel(new GridLayout(1,2));
+		listModel = new DefaultListModel<>();
+		list = new JList<>(listModel);
+		panelCenter.add(list);
 		root = new DefaultMutableTreeNode();
 		model = new DefaultTreeModel(root);
 		jTree = new JTree(model);
-		add(new JScrollPane(jTree), BorderLayout.CENTER);
+		panelCenter.add(new JScrollPane(jTree));
+		add(panelCenter, BorderLayout.CENTER);
 		setVisible(true);
 	}
 
@@ -60,8 +68,11 @@ public class PrincipalFrame extends JFrame {
 		}
 	}
 	
-	public void setLabel(String word) {
-		label.setText(word);
+	public void setList(ArrayList<String> words) {
+		listModel.removeAllElements();
+		for (String string : words) {
+			listModel.addElement(string);
+		}
 	}
 	
 	public String getText() {
