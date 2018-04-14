@@ -34,10 +34,14 @@ public class PrincipalFrame extends JFrame {
 		setIconImage(new ImageIcon(getClass().getResource(ConstantList.ICON_APP)).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
-		addKeyListener(listener);
+		init(listener);
+		setVisible(true);
+	}
+	
+	private void init(Controller listener) {
 		panelText = new PanelText(listener);
 		add(panelText, BorderLayout.NORTH);
-		panelCenter = new JPanel(new GridLayout(1,2));
+		panelCenter = new JPanel(new GridLayout(1, 2));
 		listModel = new DefaultListModel<>();
 		list = new JList<>(listModel);
 		panelCenter.add(list);
@@ -46,7 +50,6 @@ public class PrincipalFrame extends JFrame {
 		jTree = new JTree(model);
 		panelCenter.add(new JScrollPane(jTree));
 		add(panelCenter, BorderLayout.CENTER);
-		setVisible(true);
 	}
 
 	public void paintTree(Node<Letter> rootNode) {

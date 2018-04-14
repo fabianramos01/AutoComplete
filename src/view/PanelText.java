@@ -19,6 +19,7 @@ public class PanelText extends JPanel {
 		setLayout(new GridLayout(1,2));
 		textField = new JTextField();
 		textField.setFont(ConstantList.AGENCY_FB);
+		textField.addKeyListener(listener);
 		add(textField);
 		add(UtilityList.createJButtonText(ActionCommand.COMMAND_ENTER.getCommand(),
 				ActionCommand.COMMAND_ENTER.getTitle(), Color.BLUE, ConstantList.AGENCY_FB, listener));

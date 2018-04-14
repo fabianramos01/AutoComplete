@@ -23,7 +23,7 @@ public class ManagerWord {
 				addLetter(nTree.getRoot(), predict, 0);
 			}
 		}
-		orderArray();
+		// orderArray();
 	}
 
 	private void addLetter(Node<Letter> father, String info, int i) {
@@ -38,22 +38,22 @@ public class ManagerWord {
 				addLetter(actual, info, i + 1);
 			}
 		} else {
-			words.add(predict(father, info, 0));
+			predict(father, info, 0);
 		}
 	}
 
-	private String predict(Node<Letter> actual, String info, int i) {
-		if (!actual.getChilds().isEmpty()) {
-			for (Node<Letter> node : actual.getChilds()) {
-				words.add(predict(node, info + node.toString(), i + node.getInfo().getVisit()));
-			}
+	private void predict(Node<Letter> actual, String info, int i) {
+		for (Node<Letter> node : actual.getChilds()) {
+			predict(node, info + node.toString(), i + node.getInfo().getVisit());
 		}
-		return info + i;
+		if (actual.getChilds().isEmpty()) {
+			words.add(info + i);
+		}
 	}
 
 	private void orderArray() {
 		for (int i = 1; i < words.size(); i++) {
-			String word = words.get(i-1);
+			String word = words.get(i - 1);
 			if (Integer.parseInt(word.charAt(words.get(i - 1).length() - 1) + "") < Integer
 					.parseInt(words.get(i).charAt(words.get(i).length() - 1) + "")) {
 				words.add(i, word);
