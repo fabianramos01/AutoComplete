@@ -2,6 +2,8 @@ package models;
 
 import java.util.ArrayList;
 
+import controller.ConstantList;
+
 public class ManagerWord {
 
 	private NTree<Letter> nTree;
@@ -23,7 +25,7 @@ public class ManagerWord {
 				addLetter(nTree.getRoot(), predict, 0);
 			}
 		}
-		// orderArray();
+		setString();
 	}
 
 	private void addLetter(Node<Letter> father, String info, int i) {
@@ -47,18 +49,30 @@ public class ManagerWord {
 			predict(node, info + node.toString(), i + node.getInfo().getVisit());
 		}
 		if (actual.getChilds().isEmpty()) {
-			words.add(info + i);
+			addToArray(info + ConstantList.SEPARATOR + i);
 		}
 	}
 
-	private void orderArray() {
-		for (int i = 1; i < words.size(); i++) {
-			String word = words.get(i - 1);
-			if (Integer.parseInt(word.charAt(words.get(i - 1).length() - 1) + "") < Integer
-					.parseInt(words.get(i).charAt(words.get(i).length() - 1) + "")) {
-				words.add(i, word);
-				words.add(i - 1, words.get(i));
+	private void addToArray(String info) {
+		boolean option = false;
+		for (int i = 0; i < words.size(); i++) {
+			int wordI = info.lastIndexOf(ConstantList.SEPARATOR) + 1;
+			int wordNI = words.get(i).lastIndexOf(ConstantList.SEPARATOR) + 1;
+			if (Integer.parseInt(words.get(i).substring(wordNI, words.get(i).length())) < Integer
+					.parseInt(info.substring(wordI, info.length()))) {
+				words.add(i, info);
+				option = true;
+				break;
 			}
+		}
+		if (!option) {
+			words.add(info);
+		}
+	}
+
+	private void setString() {
+		for (int i = 0; i < words.size(); i++) {
+			words.set(i, words.get(i).substring(0, words.get(i).lastIndexOf(ConstantList.SEPARATOR)));
 		}
 	}
 
