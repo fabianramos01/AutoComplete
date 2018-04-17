@@ -33,7 +33,7 @@ public class PrincipalFrame extends JFrame {
 	public PrincipalFrame(Controller listener) {
 		setIconImage(new ImageIcon(getClass().getResource(ConstantList.ICON_APP)).getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setExtendedState(MAXIMIZED_BOTH);
+		setSize(ConstantList.WIDTH, ConstantList.HEIGHT);
 		init(listener);
 		setVisible(true);
 	}

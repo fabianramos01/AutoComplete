@@ -9,4 +9,6 @@ public class ConstantList {
 	public static final Font AGENCY_FB = new Font("Agency FB", Font.BOLD, 20);
 	public static final String MENU_TREE = "Árbol";
 	public static final String SEPARATOR = "-";
+	public static final int WIDTH = 500;
+	public static final int HEIGHT = 500;
 }
